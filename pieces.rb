@@ -42,28 +42,17 @@ class Piece
 end
 
 class Pawn < Piece
-  attr_accessor :first_move
-=begin
-  def path_to
-    # pawn is unique
-    possible_moves = []
-    if @first_move
-      return [(x,y+1), (x,y+2)]
-    end
+  attr_reader :VECTORS
 
-    #else
-    # check if we're blocked y+1 spaces
-    check_board?(x,y+1) #have it true/false
-    # true, add [x,y+1] to legal moves
-    possible_moves << move
-    #check if there's a piece diagonal
-    move = check_board?(x-1,y+1) and (x+1,y+1)
-    possible_moves << move
-    #NOTE - make a map!!!
-    returns possible_moves
-    # return [[0,1],[3,2],...]
+  def initialize(position, color, display_name)
+    super
+    @VECTORS = [[1,0],[1,-1],[1,1]] #black
+    #@VECTORS = [[-1,0],[-1,-1],[-1,1]] #white
+    #implement flag to switch these based on color
   end
-=end
+
+
+
 end
 
 class Rook < Piece
