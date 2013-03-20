@@ -50,9 +50,9 @@ class Chess
 
   def switch_player
     if current_player == @white
-      current_player = @black
+      @current_player = @black
     else current_player == @black
-      current_player = @white
+      @current_player = @white
     end
   end
 

@@ -53,6 +53,7 @@ class Pawn < Piece
         nil
       elsif ((from_col - to_col).abs == 1) && (from_row - to_row == 1)
         # move diagonal
+        return nil if grid[to_row][to_col].nil?
         return [[to_row, to_col]] if grid[to_row][to_col].color == 'black'
         nil
       else
@@ -66,6 +67,7 @@ class Pawn < Piece
         return [[to_row, to_col]] if grid[to_row][to_col].nil?
       elsif ((from_col - to_col).abs == 1) && (from_row - to_row == -1)
         # move diagonal
+        return nil if grid[to_row][to_col].nil?
         return [[to_row, to_col]] if grid[to_row][to_col].color == 'white'
         nil
       else

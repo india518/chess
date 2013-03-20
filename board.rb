@@ -34,7 +34,7 @@ class Board
   end
 
   def display
-     grid.map do |array| array.map do |piece_obj|
+   to_show =  grid.map do |array| array.map do |piece_obj|
        if piece_obj.nil?
          '  '
        else
@@ -42,6 +42,7 @@ class Board
        end
      end
    end
+   to_show.each {|array| p array }
   end
 
   def check_move(move, player_color)
@@ -50,16 +51,14 @@ class Board
     to_row = move[1][0]
     to_col = move[1][1]
 
-    # player_color is color of player trying to make move
     #TO ADD: If king is being checked, move can only be to save king
+
+    return false if grid[from_row][from_col].color != player_color
+
     on_board?(move)
     from_piece = grid[from_row][from_col]
 
-    # return false if from_piece is occupied by enemy piece
     move_path = from_piece.path_to(to_row, to_col, @grid)
-
-    #if we are a pawn, ask the pawn, can you move diagonally?
-
     return path_not_blocked?(move_path,player_color)
   end
 
