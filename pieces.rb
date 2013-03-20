@@ -44,7 +44,7 @@ class Rook < Piece
   def path_to(to_row, to_col)
     # example to_row, to_col 2,2
     #
-    from_row = postion[0]
+    from_row = postion[0]   # REV: from_row, from_col = position
     from_col = position[1]
     move_path = []
     direction = []
@@ -106,7 +106,7 @@ class Knight < Piece
 
   def move_path(to_row, to_col)
     # example to_row, to_col 2,2
-    from_row = postion[0]
+      from_row = postion[0] # REV: watch out for misspelled positions
     from_col = position[1]
     move_path = []
     direction = []

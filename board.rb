@@ -16,6 +16,7 @@ class Board
     @board[0][5] = Bishop.new([0,5], 'black','B ')
     @board[0][3] = Queen.new([0,3], 'black','Q ')
     @board[0][4] = King.new([0,4], 'black','K ')
+     # REV: Should tie display_name internally to Specialized Piece classes
 
     @board[7][0] = Rook.new([7,0],'white','R ')
     @board[7][7] = Rook.new([7,7],'white','R ')
@@ -51,7 +52,7 @@ class Board
     # if move results in king being checked, raise check flag
   end
 
-  def check_move(move, player_color)
+    def check_move(move, player_color) #Where's player_color coming from?
     # player_color is color of player trying to make move
 
     # If king is being checked, move can only be to save king
@@ -74,7 +75,7 @@ class Board
 
     # return false if from_piece is occupied by enemy piece
     move_path = from_piece.move_path(to_row, to_col)
-    return board_check(move_path,player_color)
+      return board_check(move_path,player_color) # REV: Implicit return here
   end
 
   def board_check(move_path,player_color)
@@ -100,8 +101,8 @@ class Board
   end
 
   def do_move(move)
-    from_row = move[0][0]
-    from_col = move[0][1]
+    from_row = move[0][0]   # REV: from_row, from_col = move[0]
+    from_col = move[0][1]   # REV: to_row, to_col = move[1]
     to_row = move[1][0]
     to_col = move[1][1]
     piece = @board[from_row][from_col]

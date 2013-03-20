@@ -9,6 +9,7 @@ class Game
   def initialize
     @board = Board.new
     @white = Player.new('white')
+    # REV: Symbols, rather than stirngs, are better for encoding color
     @black = Player.new('black')
     @current_player = @white
 
@@ -48,7 +49,7 @@ class Game
   end
 
   def switch_player
-    if current_player == white
+    if current_player == white # REV: Pseudocode? "white"? :white?
       current_player = black
     else current_player == black
       current_player = white
@@ -78,7 +79,7 @@ class Player
     @color = color
   end
 
-  def get_move
+    def get_move   # REV: better method name may be "specify_move"
     puts "Please enter your move, #{@color}:"
     puts "Enter move as [[start],[end]] where start = '[row, column] and end =[row,column]'"
     move = gets.chomp.split(',')
