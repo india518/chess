@@ -1,15 +1,16 @@
 require 'colorize'
-require 'board.rb'
+load './board.rb'
+load './pieces.rb'
 
 class Game
 
-  attr_accessor :current_player, :checkmate
+  attr_accessor :current_player, :checkmate, :board
 
   def initialize
-    board = Board.new
-    white = Player.new('white')
-    black = Player.new('black')
-    @current_player = white
+    @board = Board.new
+    @white = Player.new('white')
+    @black = Player.new('black')
+    @current_player = @white
 
   end
 
@@ -22,11 +23,11 @@ class Game
       valid_move = false
 
       until valid_move
-        move = @current_player.get_move
+        move = current_player.get_move
         # move = [[x,y],[x,y]] but not necessarily valid
-        valid_move = board.check_move(move)
+        valid_move = board.check_move(move, current_player.color)
         # check_move returns true/false
-        @current_player.inform_invalid_move unless valid_move
+        current_player.inform_invalid_move unless valid_move
       end
 
       board.do_move(move)
@@ -67,18 +68,18 @@ end
 
 
 class Player
-  attr_accessor :white_or_black
+  attr_accessor :color
 
   def inform_invalid_move
     puts "Bad move, please try again."
   end
 
   def initialize(color)
-    @white_or_black = color
+    @color = color
   end
 
   def get_move
-    puts "Please enter your move, #{@white_or_black}:"
+    puts "Please enter your move, #{@color}:"
     puts "Enter move as [start],[end]: '[row, column],[row,column]'"
 
     valid_move = false
@@ -89,10 +90,6 @@ class Player
 
   end
 
-
-  def
-
-  end
 
 end
 
