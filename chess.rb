@@ -80,14 +80,13 @@ class Player
 
   def get_move
     puts "Please enter your move, #{@color}:"
-    puts "Enter move as [start],[end]: '[row, column],[row,column]'"
-
-    valid_move = false
-
-    while valid_move
-      input = gets.chomp.split(',')
-    end
-
+    puts "Enter move as [[start],[end]] where start = '[row, column] and end =[row,column]'"
+    move = gets.chomp.split(',')
+    move[0][0] = move[0][0].to_i
+    move[0][1] = move[0][1].to_i
+    move[1][0] = move[1][0].to_i
+    move[1][1] = move[1][1].to_i
+    move
   end
 
 

@@ -5,6 +5,7 @@ class Board
   # check indicates if king is checked
 
   def initialize
+    # top is black
     @check = false
     @board = Array.new(8) { Array.new(8,nil) }
     @board[0][0] = Rook.new([0,0],'black','R ')
@@ -25,7 +26,7 @@ class Board
     @board[7][3] = Queen.new([7,3], 'white','Q ')
     @board[7][4] = King.new([7,4], 'white','K ')
 
-    7.times do |index|
+    8.times do |index|
       @board[1][index] = Pawn.new([1,index], 'black','P ')
       @board[6][index] = Pawn.new([6,index], 'white','P ')
     end
@@ -33,7 +34,7 @@ class Board
   end
 
   def display
-     self.map do |array| array.map do |piece_obj|
+     @board.map do |array| array.map do |piece_obj|
        if piece_obj.nil?
          '  '
        else
