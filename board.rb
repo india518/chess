@@ -1,40 +1,40 @@
 class Board
   # Board contains all instance variables representing the pieces
 
-  attr_accessor :board, :check
+  attr_accessor :grid, :check
   # check indicates if king is checked
 
   def initialize
     # top is black
     @check = false
-    @board = Array.new(8) { Array.new(8,nil) }
-    @board[0][0] = Rook.new([0,0],'black','R ')
-    @board[0][7] = Rook.new([0,7],'black','R ')
-    @board[0][1] = Knight.new([0,1], 'black','Kn')
-    @board[0][6] = Knight.new([0,6], 'black','Kn')
-    @board[0][2] = Bishop.new([0,2], 'black','B ')
-    @board[0][5] = Bishop.new([0,5], 'black','B ')
-    @board[0][3] = Queen.new([0,3], 'black','Q ')
-    @board[0][4] = King.new([0,4], 'black','K ')
+    self.grid = Array.new(8) { Array.new(8,nil) }
+    grid[0][0] = Rook.new([0,0],'black','R ')
+    grid[0][7] = Rook.new([0,7],'black','R ')
+    grid[0][1] = Knight.new([0,1], 'black','Kn')
+    grid[0][6] = Knight.new([0,6], 'black','Kn')
+    grid[0][2] = Bishop.new([0,2], 'black','B ')
+    grid[0][5] = Bishop.new([0,5], 'black','B ')
+    grid[0][3] = Queen.new([0,3], 'black','Q ')
+    grid[0][4] = King.new([0,4], 'black','K ')
 
-    @board[7][0] = Rook.new([7,0],'white','R ')
-    @board[7][7] = Rook.new([7,7],'white','R ')
-    @board[7][1] = Knight.new([7,1], 'white','Kn')
-    @board[7][6] = Knight.new([7,6], 'white','Kn')
-    @board[7][2] = Bishop.new([7,2], 'white','B ')
-    @board[7][5] = Bishop.new([7,5], 'white','B ')
-    @board[7][3] = Queen.new([7,3], 'white','Q ')
-    @board[7][4] = King.new([7,4], 'white','K ')
+    grid[7][0] = Rook.new([7,0],'white','R ')
+    grid[7][7] = Rook.new([7,7],'white','R ')
+    grid[7][1] = Knight.new([7,1], 'white','Kn')
+    grid[7][6] = Knight.new([7,6], 'white','Kn')
+    grid[7][2] = Bishop.new([7,2], 'white','B ')
+    grid[7][5] = Bishop.new([7,5], 'white','B ')
+    grid[7][3] = Queen.new([7,3], 'white','Q ')
+    grid[7][4] = King.new([7,4], 'white','K ')
 
     8.times do |index|
-      @board[1][index] = Pawn.new([1,index], 'black','P ')
-      @board[6][index] = Pawn.new([6,index], 'white','P ')
+      grid[1][index] = Pawn.new([1,index], 'black','P ')
+      grid[6][index] = Pawn.new([6,index], 'white','P ')
     end
 
   end
 
   def display
-     @board.map do |array| array.map do |piece_obj|
+     grid.map do |array| array.map do |piece_obj|
        if piece_obj.nil?
          '  '
        else
@@ -48,7 +48,7 @@ class Board
     # player_color is color of player trying to make move
     #TO ADD: If king is being checked, move can only be to save king
     on_board?(move)
-    from_piece = board[from_row][from_col]
+    from_piece = grid[from_row][from_col]
 
     # return false if from_piece is occupied by enemy piece
     move_path = from_piece.move_path(to_row, to_col)
@@ -63,7 +63,7 @@ class Board
     fr_pos = from_piece.position
     to_r = to_pos[0]
     to_c = to_pos[1]
-    diagonal?(fr_pos, to_pos) && from_piece.is_a?(Pawn) && @board.board[to_r][to_c].nil?
+    diagonal?(fr_pos, to_pos) && from_piece.is_a?(Pawn) && grid[to_r][to_c].nil?
     # returns true if pawn is making a diagonal move but it's empty
   end
 
@@ -98,13 +98,13 @@ class Board
       #position is [x,y]
       row = position[0]
       col = position[1]
-      unless @board[row][col].nil?
+      unless grid[row][col].nil?
         return false
       end
     end
     # Final check: capture or move?
     return true if last_pos.nil?
-    return true if @board[last_pos[0]][last_pos[1]] != player_color
+    return true if grid[last_pos[0]][last_pos[1]] != player_color
     # if we reach this, we are blocked by our own piece
     false
   end
@@ -114,9 +114,9 @@ class Board
     from_col = move[0][1]
     to_row = move[1][0]
     to_col = move[1][1]
-    piece = @board[from_row][from_col]
-    @board[from_row][from_col] = nil
-    @board[to_row][to_col] = piece
+    piece = grid[from_row][from_col]
+    grid[from_row][from_col] = nil
+    grid[to_row][to_col] = piece
   end
 
 end

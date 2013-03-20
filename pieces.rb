@@ -1,13 +1,12 @@
 class Piece
 
-  attr_accessor :position, :color, :attacking_king, :display_name, :scalar
+  attr_accessor :position, :color, :attacking_king, :display_name
 
   def initialize(position, color, display_name)
     @position = position
     @color = color
     @attacking_king = false
     @display_name = display_name
-    @scalar = 1
   end
 
   def path_to(to_row, to_col)
@@ -18,10 +17,10 @@ class Piece
     move_path = []
     direction = []
 
-    update_scalar(to_row,to_col)
+    scalar = update_scalar(to_row,to_col)
 
     @VECTORS.each do |vector|
-      proj = [vector[0]*@scalar + from_row, vector[1]*@scalar + from_col]
+      proj = [vector[0]*scalar + from_row, vector[1]*scalar + from_col]
       if proj == [to_row,to_col]
         direction = vector
         # direction will equal to one vector (ie. [-1,0])
@@ -30,7 +29,7 @@ class Piece
 
     return nil if direction.empty?
 
-    @scalar.times do |index|
+    scalar.times do |index|
       move_path << [from_row + direction[0]*(index+1),
                     from_col + direction[1]*(index+1)]
     end
@@ -51,6 +50,9 @@ class Pawn < Piece
     #implement flag to switch these based on color
   end
 
+  def update_scalar
+    1
+  end
 
 
 end
@@ -67,7 +69,7 @@ class Rook < Piece
   def update_scalar(to_row, to_col)
     from_row = position[0]
     from_col = position[1]
-    @scalar = [(to_row - from_row).abs, (to_col - from_col).abs].max
+    scalar = [(to_row - from_row).abs, (to_col - from_col).abs].max
   end
 
 end
@@ -92,6 +94,7 @@ class Knight < Piece
 
 
   def update_scalar(to_row, to_col)
+    1
   end
 
 end
@@ -108,7 +111,7 @@ class Bishop < Piece
   def update_scalar(to_row, to_col)
     from_row = position[0]
     from_col = position[1]
-    @scalar = (to_row - from_row).abs
+    scalar = (to_row - from_row).abs
   end
 
 end
@@ -125,7 +128,7 @@ class Queen < Piece
   def update_scalar(to_row, to_col)
     from_row = position[0]
     from_col = position[1]
-    @scalar = [(to_row - from_row).abs, (to_col - from_col).abs].max
+    scalar = [(to_row - from_row).abs, (to_col - from_col).abs].max
   end
 
 end
@@ -140,6 +143,7 @@ class King < Piece
   end
 
   def update_scalar(to_row, to_col)
+    1
   end
 
 end
