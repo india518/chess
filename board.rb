@@ -45,6 +45,11 @@ class Board
   end
 
   def check_move(move, player_color)
+    from_row = move[0][0]
+    from_col = move[0][1]
+    to_row = move[1][0]
+    to_col = move[1][1]
+
     # player_color is color of player trying to make move
     #TO ADD: If king is being checked, move can only be to save king
     on_board?(move)

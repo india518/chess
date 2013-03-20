@@ -49,10 +49,10 @@ class Chess
   end
 
   def switch_player
-    if current_player == white
-      current_player = black
-    else current_player == black
-      current_player = white
+    if current_player == @white
+      current_player = @black
+    else current_player == @black
+      current_player = @white
     end
   end
 
