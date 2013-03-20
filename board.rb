@@ -1,3 +1,5 @@
+require 'debugger'
+
 class Board
   # Board contains all instance variables representing the pieces
 
@@ -46,6 +48,7 @@ class Board
   end
 
   def check_move(move, player_color)
+    debugger
     from_row = move[0][0]
     from_col = move[0][1]
     to_row = move[1][0]
@@ -70,10 +73,10 @@ class Board
     to_col = move[1][1]
 
     # Checks both coordinates are on board
-    return false if (0..7).include?(from_row)
-    return false if (0..7).include?(from_col)
-    return false if (0..7).include?(to_row)
-    return false if (0..7).include?(to_col)
+    return false unless (0..7).include?(from_row)
+    return false unless (0..7).include?(from_col)
+    return false unless (0..7).include?(to_row)
+    return false unless (0..7).include?(to_col)
     true
   end
 
