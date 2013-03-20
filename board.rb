@@ -63,7 +63,7 @@ class Board
     fr_pos = from_piece.position
     to_r = to_pos[0]
     to_c = to_pos[1]
-    diagonal?(fr_pos, to_pos) && from_piece.is_a?(Pawn) && @board[to_r][to_c].nil?
+    diagonal?(fr_pos, to_pos) && from_piece.is_a?(Pawn) && @board.board[to_r][to_c].nil?
     # returns true if pawn is making a diagonal move but it's empty
   end
 
