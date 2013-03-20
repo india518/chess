@@ -44,19 +44,18 @@ class Board
    end
   end
 
-  def do_move
-    # move pieces
-    # and removes if necessary
-
-    # if move results in king being checked, raise check flag
-  end
-
   def check_move(move, player_color)
     # player_color is color of player trying to make move
+    #TO ADD: If king is being checked, move can only be to save king
+    on_board?(move)
+    from_piece = board[from_row][from_col]
 
-    # If king is being checked, move can only be to save king
+    # return false if from_piece is occupied by enemy piece
+    move_path = from_piece.move_path(to_row, to_col)
+    return path_not_blocked?(move_path,player_color)
+  end
 
-    #### Move into helper method LATER
+  def on_board?(move)
     # move = [[x,y],[x,y]]
     from_row = move[0][0]
     from_col = move[0][1]
@@ -68,16 +67,10 @@ class Board
     return false if (0..7).include?(from_col)
     return false if (0..7).include?(to_row)
     return false if (0..7).include?(to_col)
-    ####
-
-    from_piece = board[from_row][from_col]
-
-    # return false if from_piece is occupied by enemy piece
-    move_path = from_piece.move_path(to_row, to_col)
-    return board_check(move_path,player_color)
+    true
   end
 
-  def board_check(move_path,player_color)
+  def path_not_blocked?(move_path,player_color)
     # move_path can be false or array
     # returns true or false
     unless move_path
