@@ -10,13 +10,16 @@ class Player
   end
 
   def get_move
-    puts "Please enter your move, #{@color}:"
-    puts "Enter move as [[start],[end]] where start = '[row, column] and end =[row,column]'"
-    move = gets.chomp.split(',')
-    move[0][0] = move[0][0].to_i
-    move[0][1] = move[0][1].to_i
-    move[1][0] = move[1][0].to_i
-    move[1][1] = move[1][1].to_i
+    move = [[],[]]
+    puts "It's your turn, #{@color}."
+    puts "Enter the location of the piece you want to move: ie. 6-0 "
+    start_move = gets.chomp.split('-')
+    move[0][0] = start_move[0].to_i
+    move[0][1] = start_move[1].to_i
+    puts "Enter the location of where you want to move to: ie. 5-0"
+    end_move = gets.chomp.split('-')
+    move[1][0] = end_move[0].to_i
+    move[1][1] = end_move[1].to_i
     move
   end
 
