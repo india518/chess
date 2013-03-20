@@ -1,11 +1,10 @@
 class Piece
 
-  attr_accessor :position, :color, :attacking_king, :display_name
+  attr_accessor :position, :color, :display_name
 
   def initialize(position, color, display_name)
     @position = position
     @color = color
-    @attacking_king = false
     @display_name = display_name
   end
 

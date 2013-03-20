@@ -1,4 +1,5 @@
 require 'debugger'
+require 'colorize'
 
 class Board
   # Board contains all instance variables representing the pieces
@@ -10,41 +11,46 @@ class Board
     # top is black
     @check = false
     self.grid = Array.new(8) { Array.new(8,nil) }
-    grid[0][0] = Rook.new([0,0],'black','R ')
-    grid[0][7] = Rook.new([0,7],'black','R ')
-    grid[0][1] = Knight.new([0,1], 'black','Kn')
-    grid[0][6] = Knight.new([0,6], 'black','Kn')
-    grid[0][2] = Bishop.new([0,2], 'black','B ')
-    grid[0][5] = Bishop.new([0,5], 'black','B ')
-    grid[0][3] = Queen.new([0,3], 'black','Q ')
-    grid[0][4] = King.new([0,4], 'black','K ')
+    grid[0][0] = Rook.new([0,0],'black','R '.blue)
+    grid[0][7] = Rook.new([0,7],'black','R '.blue)
+    grid[0][1] = Knight.new([0,1], 'black','Kn'.blue)
+    grid[0][6] = Knight.new([0,6], 'black','Kn'.blue)
+    grid[0][2] = Bishop.new([0,2], 'black','B '.blue)
+    grid[0][5] = Bishop.new([0,5], 'black','B '.blue)
+    grid[0][3] = Queen.new([0,3], 'black','Q '.blue)
+    grid[0][4] = King.new([0,4], 'black','K '.blue)
 
-    grid[7][0] = Rook.new([7,0],'white','R ')
-    grid[7][7] = Rook.new([7,7],'white','R ')
-    grid[7][1] = Knight.new([7,1], 'white','Kn')
-    grid[7][6] = Knight.new([7,6], 'white','Kn')
-    grid[7][2] = Bishop.new([7,2], 'white','B ')
-    grid[7][5] = Bishop.new([7,5], 'white','B ')
-    grid[7][3] = Queen.new([7,3], 'white','Q ')
-    grid[7][4] = King.new([7,4], 'white','K ')
+    grid[7][0] = Rook.new([7,0],'white','R '.white)
+    grid[7][7] = Rook.new([7,7],'white','R '.white)
+    grid[7][1] = Knight.new([7,1], 'white','Kn'.white)
+    grid[7][6] = Knight.new([7,6], 'white','Kn'.white)
+    grid[7][2] = Bishop.new([7,2], 'white','B '.white)
+    grid[7][5] = Bishop.new([7,5], 'white','B '.white)
+    grid[7][3] = Queen.new([7,3], 'white','Q '.white)
+    grid[7][4] = King.new([7,4], 'white','K '.white)
 
     8.times do |index|
-      grid[1][index] = Pawn.new([1,index], 'black','P ')
-      grid[6][index] = Pawn.new([6,index], 'white','P ')
+      grid[1][index] = Pawn.new([1,index], 'black','P '.blue)
+      grid[6][index] = Pawn.new([6,index], 'white','P '.white)
     end
 
   end
 
   def display
-   to_show =  grid.map do |array| array.map do |piece_obj|
+    index = 0
+    (0..7).each {|num| print "  #{num} " }
+    print "\n"
+   to_show =  grid.map do |array|
+     array.map do |piece_obj|
        if piece_obj.nil?
-         '  '
+         print  '|__|'
        else
-         piece_obj.display_name
+         print "|#{piece_obj.display_name}|"
        end
      end
+     print "#{index} \n"
+     index += 1
    end
-   to_show.each {|array| p array }
   end
 
   def check_move(move, player_color)
@@ -108,8 +114,13 @@ class Board
     to_row = move[1][0]
     to_col = move[1][1]
     piece = grid[from_row][from_col]
+
+    # Update board
     grid[from_row][from_col] = nil
     grid[to_row][to_col] = piece
+
+    #Update piece
+    piece.position = [to_row, to_col]
   end
 
 end
