@@ -63,11 +63,14 @@ class Board
     #TO ADD: If king is being checked, move can only be to save king
 
     return false if grid[from_row][from_col].color != player_color
+    # you can't move an enemy piece
 
     on_board?(move)
+
     from_piece = grid[from_row][from_col]
 
     move_path = from_piece.path_to(to_row, to_col, @grid)
+
     return path_not_blocked?(move_path,player_color)
   end
 
@@ -102,8 +105,8 @@ class Board
       end
     end
     # Final check: capture or move?
-    return true if last_pos.nil?
-    return true if grid[last_pos[0]][last_pos[1]] != player_color
+    return true if grid[last_pos[0]][last_pos[1]].nil?
+    return true if grid[last_pos[0]][last_pos[1]].color != player_color
     # if we reach this, we are blocked by our own piece
     false
   end
