@@ -26,7 +26,7 @@ class Chess
       until valid_move
         move = current_player.get_move
         # move = [[x,y],[x,y]] but not necessarily valid
-        valid_move = board.check_move(move, current_player.color)
+        valid_move = board.validate_move(move, current_player.color)
         # check_move returns true/false
         current_player.inform_invalid_move unless valid_move
       end
@@ -35,13 +35,11 @@ class Chess
       # by now, move is completely legit
       # update board
 
+      board.update_check(current_player) #is the enemy now in check?
+
       switch_player
     end
 
-  end
-
-  def check?
-    # returns true/false
   end
 
   def checkmate?
@@ -56,9 +54,6 @@ class Chess
     end
   end
 
-  def update_check
-
-  end
 
   def update_checkmate
 

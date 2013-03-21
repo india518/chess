@@ -4,7 +4,7 @@ require 'colorize'
 class Board
   # Board contains all instance variables representing the pieces
 
-  attr_accessor :grid, :check
+  attr_accessor :grid, :check, :white_pieces, :black_pieces
   # check indicates if king is checked
 
   def initialize
@@ -34,6 +34,19 @@ class Board
       grid[6][index] = Pawn.new([6,index], 'white','P '.white)
     end
 
+    @black_pieces = []
+    @white_pieces = []
+
+    8.times do |index|
+      @black_pieces[index] = grid[0][index]
+      @white_pieces[index] = grid[7][index]
+    end
+
+    8.upto(15) do |index|
+      @black_pieces[index] = grid[1][index-8]
+      @white_pieces[index] = grid[6][index-8]
+    end
+
   end
 
   def display
@@ -53,7 +66,13 @@ class Board
    end
   end
 
-  def check_move(move, player_color)
+  def update_check(current_player)
+    # self.check = true if there is an enemy piece that is threatening king
+  end
+
+
+
+  def validate_move(move, player_color)
     debugger
     from_row = move[0][0]
     from_col = move[0][1]
