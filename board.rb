@@ -66,14 +66,46 @@ class Board
    end
   end
 
-  def update_check(current_player)
-    # self.check = true if there is an enemy piece that is threatening king
+  def update_check(player_color)
+    # player color is color of player who made last move (ie. white)
+    debugger
+    king = get_king(player_color)
+    # gets king of the other color (ie. black)
+    enemy_pieces = get_enemy_pieces(player_color)
+    enemy_pieces.each do |piece|
+      if can_hit_king?(piece, king)
+        return true
+      end
+    end
+    false
+  end
+
+  def get_king(player_color)
+    player_color == 'white' ? @black_pieces[4] : @white_pieces[4]
+    #We know it's at [4] because @black/white_pieces don't move from array
+  end
+
+  def get_enemy_pieces(player_color)
+    if player_color == 'white'
+       still_active = @black_pieces.select {|piece| not piece.position.nil? }
+     else
+       still_active = @white_pieces.select {|piece| not piece.position.nil? }
+     end
+     still_active
+  end
+
+  def can_hit_king?(piece, king)
+    from_row = piece.position[0]
+    from_col = piece.position[1]
+    to_row = king.position[0]
+    to_col = king.position[1]
+    move = [[from_row,from_col],[to_row, to_col]]
+    validate_move(move, piece.color)
   end
 
 
-
   def validate_move(move, player_color)
-    debugger
+  #  debugger
     from_row = move[0][0]
     from_col = move[0][1]
     to_row = move[1][0]
@@ -125,7 +157,12 @@ class Board
     end
     # Final check: capture or move?
     return true if grid[last_pos[0]][last_pos[1]].nil?
-    return true if grid[last_pos[0]][last_pos[1]].color != player_color
+
+    if grid[last_pos[0]][last_pos[1]].color != player_color
+      #Kill!
+      grid[last_pos[0]][last_pos[1]].position = nil
+      return true
+    end
     # if we reach this, we are blocked by our own piece
     false
   end
@@ -141,7 +178,7 @@ class Board
     grid[from_row][from_col] = nil
     grid[to_row][to_col] = piece
 
-    #Update piece
+    #Update piece position
     piece.position = [to_row, to_col]
   end
 
